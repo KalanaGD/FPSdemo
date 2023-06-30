@@ -4,25 +4,36 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    private CharacterController _cContoller;
     [SerializeField] private float _speed = 3.5f;
 
-    private CharacterController _characterController;
+    private float _gravity = 9.81f;
 
     private void Awake()
     {
-        _characterController = GetComponent<CharacterController>();
-    }//Avake
+        _cContoller = GetComponent<CharacterController>();
+
+    }//Awake
+
+    private void Start()
+    {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
 
     private void Update()
     {
-        CalculateMovement();
+        PlayerMove();
+
     }//Update
 
-    private void CalculateMovement()
+    private void PlayerMove()
     {
         Vector3 _direction = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         Vector3 _velocity = _direction * _speed;
+        _velocity.y -= _gravity;
 
-        _characterController.Move(_velocity * Time.deltaTime);
-    }//CalculateMovement
+        _cContoller.Move(_velocity * Time.deltaTime);
+
+    }//PlayerMove
 }
