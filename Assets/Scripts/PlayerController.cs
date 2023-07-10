@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,15 +18,29 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+       
+        Cursor.visible = false; //hide cursor
+        Cursor.lockState = CursorLockMode.Locked; //lock cursor
+
     }//Start
 
     private void Update()
     {
         PlayerMove();
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnLockCursor();
+        }
 
     }//Update
+
+    private void UnLockCursor()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+    }//UnLockCursor 
+
 
     private void PlayerMove()
     {
@@ -34,8 +49,7 @@ public class PlayerController : MonoBehaviour
         
         _velocity.y -= _gravity; //Apply gravity
 
-        //transform => local space to world space
-        _velocity = transform.transform.TransformDirection(_velocity);
+        _velocity = transform.transform.TransformDirection(_velocity);  //transform => local space to world space
 
         _cContoller.Move(_velocity * Time.deltaTime);
 

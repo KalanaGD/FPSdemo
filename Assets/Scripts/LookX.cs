@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class LookX : MonoBehaviour
 {
-
     [SerializeField]private float _sensitivity = 3.5f;
 
     void Start()
