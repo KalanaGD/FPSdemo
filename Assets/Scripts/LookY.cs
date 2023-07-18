@@ -6,16 +6,12 @@ public class LookY : MonoBehaviour
 {
     [SerializeField] private float _sensitivity = 3.5f;
   
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
         CalculateMouseY();
 
-    }
+    }//Update
 
     private void CalculateMouseY()
     {
@@ -25,5 +21,6 @@ public class LookY : MonoBehaviour
         _newRotation.x -= _mouseY * _sensitivity;
 
         transform.localEulerAngles = _newRotation;
-    }
-}
+    }//CalculateMouseY
+
+}//class
