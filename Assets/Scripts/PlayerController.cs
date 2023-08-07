@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _speed = 3.5f;
 
     private float _gravity = 9.81f;
+    public bool hasCoin = false;
 
     private void Awake()
     {

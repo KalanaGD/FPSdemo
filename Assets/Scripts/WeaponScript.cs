@@ -20,19 +20,24 @@ public class WeaponScript : MonoBehaviour
     [SerializeField] private int _currentAmmo;
     private int _maxAmmo = 50;
     private bool _isReloading;
-   
 
+    private UIManager _uIManager;
 
+ 
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        _uIManager = GameObject.Find("Canvas").GetComponent<UIManager>();
+
 
         _currentAmmo = _maxAmmo;
 
     }//Start
 
     void Update()
-    {
+    { 
+        Aiming();
+
         if (Input.GetButton("Fire1") && _currentAmmo > 0) 
         {
             PlayerShoot();
@@ -49,11 +54,13 @@ public class WeaponScript : MonoBehaviour
             _audioSource.Stop();
         }
 
-        Aiming();
+     
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R)&& _isReloading == false)
         {
             StartCoroutine(WeaponReload());
+            _isReloading = true;
+          
         }
 
     }//Update
@@ -79,6 +86,8 @@ public class WeaponScript : MonoBehaviour
     private void PlayerShoot()
     {
         _currentAmmo--;
+
+        _uIManager.UpdateAmmo(_currentAmmo);
 
         RaycastHit _hitInfo;
 
@@ -109,7 +118,12 @@ public class WeaponScript : MonoBehaviour
     {
         yield return new WaitForSeconds(1.5f);
         _currentAmmo = _maxAmmo;
-    }
+        _isReloading = false;
+
+        _uIManager.UpdateAmmo(_currentAmmo);
+
+
+    }//WeaponReload
 
 }//class
 
